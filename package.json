@@ -1,0 +1,19 @@
+{
+  "name": "employees-sam-2",
+  "version": "1.0.0",
+  "description": "This project contains source code and supporting files for a serverless application that you can deploy with the SAM CLI. It includes the following files and folders.",
+  "main": "index.js",
+  "dependencies": {
+    "rimraf": "^3.0.2",
+    "tsc-watch": "^4.5.0",
+    "typescript": "^4.5.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build":"rimraf dist",
+    "dev": "npm build && tsc-watch --onSuccess \"sam build\""
+  },
+  "author": "",
+  "license": "ISC"
+}

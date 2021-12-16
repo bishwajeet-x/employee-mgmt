@@ -1,0 +1,106 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  employees-sam-2
+
+  Sample SAM Template for employees-sam-2
+  
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 3
+
+Resources:
+  getAllEmployees:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: dist/handlers/
+      Handler: employees-rest.getAllEmployeesLH
+      Runtime: nodejs14.x
+      Architectures:
+        - x86_64
+      Events:
+        Api:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /employees
+            Method: get
+  createEmployees:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: dist/handlers/
+      Handler: employees-rest.createEmployeesLH
+      Runtime: nodejs14.x
+      Architectures:
+        - x86_64
+      Events:
+        Api:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /employees
+            Method: post
+  searchEmployees:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: dist/handlers/
+      Handler: employees-rest.findEmployeeByIdLH
+      Runtime: nodejs14.x
+      Architectures:
+        - x86_64
+      Events:
+        Api:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /employees/{id}
+            Method: get
+  updateEmployees:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: dist/handlers/
+      Handler: employees-rest.updateEmployeeLH
+      Runtime: nodejs14.x
+      Architectures:
+        - x86_64
+      Events:
+        Api:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /employees
+            Method: put
+  deleteEmployees:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: dist/handlers/
+      Handler: employees-rest.deleteEmployeeLH
+      Runtime: nodejs14.x
+      Architectures:
+        - x86_64
+      Events:
+        Api:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /employees/{id}
+            Method: delete
+
+Outputs:
+  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
+  # Find out more about other implicit resources you can reference within SAM
+  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+  EmployeesApi:
+    Description: "API Gateway endpoint URL for Prod stage for Hello World function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/employees/"
+  getAllEmployees:
+    Description: "Hello World Lambda Function ARN"
+    Value: !GetAtt getAllEmployees.Arn
+  createEmployees:
+    Description: "Hello World Lambda Function ARN"
+    Value: !GetAtt createEmployees.Arn
+  searchEmployees:
+    Description: "Hello World Lambda Function ARN"
+    Value: !GetAtt searchEmployees.Arn
+  updateEmployees:
+    Description: "Hello World Lambda Function ARN"
+    Value: !GetAtt updateEmployees.Arn
+  EmployeesIamRole:
+    Description: "Implicit IAM Role created for Hello World function"
+    Value: !GetAtt getAllEmployeesRole.Arn
